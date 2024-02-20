@@ -23,13 +23,17 @@ const authController = {
     try {
       const user = await User.findOne({ where: { email } });
       if (user && bcrypt.compareSync(password, user.password)) {
-        const token = jwt.sign({ id: user.id, role: user.role }, process.env.SECRET, {
-          expiresIn: 86400,
-        });
+        const token = jwt.sign(
+          { id: user.id, role: user.role },
+          process.env.SECRET,
+          {
+            expiresIn: 86400,
+          }
+        );
 
         req.session.token = token;
 
-        res.status(200).json({ token });
+        res.status(200).json({ token, role: user.role });
       } else {
         res.status(401).json({ error: "Invalid email or password" });
       }
