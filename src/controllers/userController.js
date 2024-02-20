@@ -1,5 +1,6 @@
 const User = require("../models/userModel");
 const Task = require("../models/taskModel");
+const upload = require("../middlewares/multer");
 
 const userController = {
   async updateUser(req, res) {
@@ -33,16 +34,23 @@ const userController = {
   },
 
   async createTask(req, res) {
-    try {
-      const task = await Task.create({
-        ...req.body,
-        id_user: req.user.id,
-      
-      });
-      res.status(201).json(task);
-    } catch (error) {
-      res.status(400).json({ error: error.message });
-    }
+    upload.single("file")(req, res, async (err) => {
+      if (err) {
+        return res.status(400).json({ error: err.message });
+      }
+
+      try {
+        const task = await Task.create({
+          ...req.body,
+          file: req.file ? req.file.path : null, // add the file path to the data
+          id_user: req.user.id,
+        });
+
+        res.status(201).json(task);
+      } catch (error) {
+        res.status(400).json({ error: error.message });
+      }
+    });
   },
 
   async getTask(req, res) {

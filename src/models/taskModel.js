@@ -11,6 +11,10 @@ const Task = db.define(
       primaryKey: true,
       autoIncrement: true,
     },
+    file: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     title: {
       type: DataTypes.STRING,
       allowNull: false,
