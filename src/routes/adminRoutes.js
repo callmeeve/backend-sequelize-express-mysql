@@ -3,9 +3,10 @@ const router = express.Router();
 const adminController = require('../controllers/adminController');
 const authJwt = require('../middlewares/authJwt');
 
-// Delete a user
-router.delete('/users/:id', [authJwt.verifyToken, authJwt.isAdmin], adminController.deleteUser);
-router.get('/users', [authJwt.verifyToken, authJwt.isAdmin], adminController.getAllUsers);
-router.get('/tasks', [authJwt.verifyToken, authJwt.isAdmin], adminController.getAllTasks);
+router.get('/', authJwt.verifyToken, authJwt.isAdmin, adminController.getAdmin);
+router.put('/', authJwt.verifyToken, authJwt.isAdmin, adminController.updateAdmin);
+
+router.get('/manager', authJwt.verifyToken, authJwt.isAdmin, adminController.getAllManager);
+router.get('/manager/:id', authJwt.verifyToken, authJwt.isAdmin, adminController.getManagerById);
 
 module.exports = router;

@@ -8,9 +8,9 @@ const storage = multer.diskStorage({
     const [type, ext] = file.mimetype.split("/");
     let dir;
     if (type === "application") {
-      dir = path.join(__dirname, '../public/uploads/rar');
+      dir = path.join(__dirname, '../public/uploads/file');
     } else if (type === "image") {
-      dir = path.join(__dirname, '../public/uploads/thumbnail');
+      dir = path.join(__dirname, '../public/uploads/image');
     }
 
     // Create directory if it doesn't exist
@@ -44,6 +44,12 @@ const upload = multer({
       "application/vnd.rar",
       "application/x-compressed",
       "application/x-zip-compressed",
+      "application/pdf",
+      "application/msword",
+      "application/vnd.ms-excel",
+      "application/vnd.ms-powerpoint",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     ];
     console.log(file.mimetype);
     if (allowedMimes.includes(file.mimetype)) {

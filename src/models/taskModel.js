@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 const db = require("../config/database");
+const User = require("./userModel");
 
 const { DataTypes } = Sequelize;
 
@@ -11,10 +12,6 @@ const Task = db.define(
       primaryKey: true,
       autoIncrement: true,
     },
-    file: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
     title: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -23,26 +20,20 @@ const Task = db.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    status: {
-      type: DataTypes.ENUM("todo", "in-progress", "done"),
-      defaultValue: "todo",
+    deadline_date: {
+      type: DataTypes.DATE,
+      allowNull: false,
     },
-    id_user: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: "users",
-        key: "id",
-      },
+    status: {
+      type: DataTypes.ENUM("ongoing", "completed"),
+      defaultValue: "ongoing",
+      allowNull: false,
+    },
+    file: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
   },
-  {
-    freezeTableName: true,
-    timestamps: false,
-  }
 );
 
 module.exports = Task;
-
-(async () => {
-  await db.sync();
-})();

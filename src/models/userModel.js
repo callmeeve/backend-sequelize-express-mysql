@@ -24,18 +24,10 @@ const User = db.define(
       allowNull: false,
     },
     role: {
-      type: DataTypes.ENUM("user", "admin"),
-      defaultValue: "user",
+      type: DataTypes.ENUM("admin", "manager", "employee"),
     },
   },
-  {
-    freezeTableName: true,
-    timestamps: false,
-  }
 );
 
-module.exports = User;
 
-(async () => {
-  await db.sync();
-})();
+module.exports = User;

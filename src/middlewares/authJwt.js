@@ -18,6 +18,8 @@ function verifyToken(req, res, next) {
     req.user = {
       id: decoded.id,
       role: decoded.role,
+      email: decoded.email,
+      username: decoded.username,
     };
     next();
   });
@@ -36,8 +38,9 @@ function requireRole(role) {
 }
 const authJwt = {
   verifyToken,
-  isUser: requireRole("user"),
   isAdmin: requireRole("admin"),
+  isManager: requireRole("manager"),
+  isEmployee: requireRole("employee"),
 };
 
 module.exports = authJwt;
